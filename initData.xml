@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<root DefenceUrl="http://192.168.2.89/matrix/touchstaff3/defencepass.php">
+<layer num="1" url="img\p1.jpg" tiny="img\tiny\p1.jpg" layerdesc="地下1层">
+<Device name="Camera" maxNum="6">
+		<item id="0" xpos="0" ypos="0" faceto="0" cycle="0" monitorNum="0" physicalNum="0" cameraType="0" />
+		<item id="1" xpos="400" ypos="700" faceto="0" cycle="0" monitorNum="1" physicalNum="1" cameraType="1" />
+		<item id="3" xpos="0" ypos="0" faceto="3" cycle="0" monitorNum="3" physicalNum="3" cameraType="2" />
+		<item id="4" xpos="500" ypos="500" faceto="0" cycle="0" monitorNum="4" physicalNum="4" cameraType="3" />
+		<item id="5" xpos="0" ypos="400" faceto="5" cycle="0" monitorNum="5" physicalNum="5" cameraType="4" />
+		<item id="6" xpos="200" ypos="200" faceto="4" cycle="0" monitorNum="6" physicalNum="6" cameraType="5" />
+		<item id="7" xpos="100" ypos="300" faceto="0" cycle="0" monitorNum="7" physicalNum="7" cameraType="6" />
+	</Device>
+	<Device name="Alarm" maxNum="2">
+		<item id="8" x1="300" y1="400" x2="80.00" y2="400.00" x3="100.00" y3="500.00" status="1" physicalNum="8" term_type="1" />
+		<item id="9" x1="400" y1="300" x2="300.00" y2="100.00" x3="500.00" y3="1000.00" status="0" physicalNum="9" term_type="0" />
+	</Device>
+	<Device name="Door" maxNum="2">
+		<item id="10" xpos="400" ypos="200" faceto="0" physicalNum="10" status="1"/>	
+		<item id="47" xpos="600" ypos="300" faceto="0" physicalNum="47" status="0"/>	
+	</Device>
+	<Device name="Barrier" maxNum="1">
+		<item id="11" xpos="200" ypos="200" faceto="0" physicalNum="11"/>
+		<item id="22" xpos="100" ypos="400" faceto="0" physicalNum="22"/>
+		<item id="23" xpos="300" ypos="500" faceto="0" physicalNum="33"/>
+	</Device>
+</layer>
+<layer num="2" url="img\p2.jpg" layerdesc="研发大楼一层">
+	<Device name="Heat_Pump" maxNum="1">
+		<item id="1" xpos="240" ypos="300" auto="0" failure="0" run="1" physicalNum="1" type="383" />
+	</Device>
+	<Device name="Air_Conditioner" maxNum="1">
+		<item id="2" xpos="320" ypos="360" auto="0" failure="1" run="1" physicalNum="2" type="305" />
+	</Device>
+	<Device name="Air_Exhaust" maxNum="1">
+		<item id="3" xpos="500" ypos="600.00" auto="0" failure="0" run="1" physicalNum="3" type="1" />
+	</Device>
+	<Device name="Fan" maxNum="1">
+		<item id="4" xpos="120" ypos="720.00" auto="0" failure="1" run="1" physicalNum="4" type="1" />
+	</Device>
+	<Device name="Drainage_Pump" maxNum="1">
+		<item id="5" xpos="240" ypos="420" auto_1="0" failure_1="1" run_1="1" auto_2="0" failure_2="0" run_2="0" physicalNum="1" type="11" />
+	</Device>
+	<Device name="Wind_Switch" maxNum="1">
+		<item id="6" xpos="300" ypos="658.55" auto="0" failure="0" run="1" physicalNum="1" type="658" />
+	</Device>
+	<Device name="Water_Tank" maxNum="1">
+		<item id="7" xpos="500" ypos="388.05" auto="1" failure="1" run="1" physicalNum="7" type="588" />
+	</Device>
+	<Device name="Lighting_Lamps" maxNum="1">
+		<item id="8" xpos="640.00" ypos="600.00" auto="0" failure="1" run="0" physicalNum="8" type="5" />
+	</Device>
+	<Device name="Lighting_Ctrl" maxNum="1">
+		<item id="9" xpos="400.00" ypos="600.00" auto="0" failure="1" run="0" physicalNum="8" type="5" />
+	</Device>
+	<Device name="PM2.5" maxNum="n">
+		<item id="1" xpos="400" ypos="400" physicalNum="1" type="0" />
+	</Device>
+	<Device name="Temperature" maxNum="n">
+		<item id="1" xpos="500" ypos="400" physicalNum="1" type="0" />
+	</Device>
+	<Device name="Temp_Ctrl" maxNum="1">
+		<item id="1" xpos="506.65" ypos="600" set_temp="20" room_temp="25" auto="0" mode="1" fan_speed="3" failure="0" run="0" physicalNum="1" type="0" />
+	</Device>
+</layer>
+<layer num="3" url="img\p3.jpg" tiny="img\tiny\p3.jpg" layerdesc="第3层">
+	<Device name="Camera" maxNum="1">
+		<item id="15" xpos="509.95" ypos="533.80" faceto="0" cycle="0" monitorNum="1" physicalNum="7" cameraType="1" />
+	</Device>
+	<Device name="Alarm" maxNum="0">
+	</Device>
+	<Device name="HomeAlarm" maxNum="0">
+	</Device>
+	<Device name="Door" maxNum="1">
+		<item id="16" xpos="145.40" ypos="773.65" doorType="4" faceto="1" status="1" physicalNum="2" />	</Device>
+	<Device name="Barrier" maxNum="1">
+		<item id="17" xpos="0.00" ypos="0.00" descr="barrier1" />	</Device>
+</layer>
+<layer num="4" url="img\p4.jpg" tiny="img\tiny\p4.jpg" layerdesc="第4层">
+	<Device name="Camera" maxNum="0">
+	</Device>
+	<Device name="Alarm" maxNum="0">
+	</Device>
+	<Device name="HomeAlarm" maxNum="0">
+	</Device>
+	<Device name="Door" maxNum="0">
+	</Device>
+	<Device name="Barrier" maxNum="0">
+	</Device>
+</layer>
+<layer num="5" url="img\p5.jpg" tiny="img\tiny\p5.jpg" layerdesc="第5层">
+	<Device name="Camera" maxNum="0">
+	</Device>
+	<Device name="Alarm" maxNum="0">
+	</Device>
+	<Device name="HomeAlarm" maxNum="0">
+	</Device>
+	<Device name="Door" maxNum="0">
+	</Device>
+	<Device name="Barrier" maxNum="0">
+	</Device>
+</layer>
+<layer num="6" url="img\p6.jpg" tiny="img\tiny\p6.jpg" layerdesc="第6层">
+	<Device name="Camera" maxNum="0">
+	</Device>
+	<Device name="Alarm" maxNum="0">
+	</Device>
+	<Device name="HomeAlarm" maxNum="0">
+	</Device>
+	<Device name="Door" maxNum="0">
+	</Device>
+	<Device name="Barrier" maxNum="0">
+	</Device>
+</layer>
+<layer num="7" url="img\p7.jpg" tiny="img\tiny\p7.jpg" layerdesc="第7层">
+	<Device name="Camera" maxNum="0">
+	</Device>
+	<Device name="Alarm" maxNum="0">
+	</Device>
+	<Device name="HomeAlarm" maxNum="0">
+	</Device>
+	<Device name="Door" maxNum="0">
+	</Device>
+	<Device name="Barrier" maxNum="0">
+	</Device>
+</layer>
+<layer num="8" url="img\p8.jpg" tiny="img\tiny\p8.jpg" layerdesc="第8层">
+	<Device name="Camera" maxNum="0">
+	</Device>
+	<Device name="Alarm" maxNum="0">
+	</Device>
+	<Device name="HomeAlarm" maxNum="0">
+	</Device>
+	<Device name="Door" maxNum="0">
+	</Device>
+	<Device name="Barrier" maxNum="0">
+	</Device>
+</layer>
+</root>

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>flash</title>
+		<meta name="author" content="administrator" />
+		<!-- Date: 2012-05-24 -->
+		<script type="text/javascript" src="swfobject.js"></script>
+	</head>
+	<body style="text-align: center">
+		<div id="flashId"></div>
+		<script language="JavaScript">	
+		
+			function login_system(str)
+			{
+				if(str.split("#")[1]=="1"){
+					document.getElementById("flashId").check_login("1");
+				}else{
+					document.getElementById("flashId").check_login("0");
+				}
+				
+			}	
+			
+			function init_data(str)
+			{
+				var xml='<?xml version="1.0" encoding="UTF-8" ?><root DefenceUrl="http://192.168.2.89/matrix/touchstaff3/defencepass.php"><layer num="1" layerdesc="地下2层"><Device name="Camera" maxNum="1"><item id="49" xpos="1819" ypos="508" faceto="6" cycle="0" monitorNum="1" physicalNum="45" cameraType="0" /></Device><Device name="Alarm" maxNum="1"><item id="1" x1="80" y1="868" x2="-39" y2="-36" x3="294" y3="-28" status="0" physicalNum="1" /></Device><Device name="HomeAlarm" maxNum="1"><item id="3" xpos="800" ypos="200" status="0" physicalNum="2" houseType="1" housex="800" housey="200" /></Device><Device name="Door" maxNum="1"><item id="1" xpos="88" ypos="542" doorType="0" faceto="1" status="0" physicalNum="3" /></Device></layer></root>';
+				document.getElementById("flashId").init_data(xml);
+			}
+						
+			function switch_monitor(str)
+			{
+				alert(str);
+			}
+			
+			function terminal_control(str)
+			{
+				alert(str);
+			}
+			
+			function modify_defence(str)
+			{				
+				alert(str);
+				document.getElementById("flashId").door_listener("DoorNum#CardId#OwnerName#CarNumber#DateTime#OperaCode#0");	
+			}
+			
+			function show_debug(str)
+			{
+				alert(str);
+			}
+			
+			function search_info(str)
+			{				
+				alert(str);	
+				var xml='';
+				for(var i=0;i<12;i++){					
+					xml+='1,博文,12,1,2010-12-01 14:36;2,山歌,1,9,2011-04-02 10:30;3,函数,3,5,2012-08-12 12:39;';
+				}	
+				document.getElementById("flashId").search_info(xml);				
+			}
+			
+			function check_defencePsw(str)
+			{
+				alert(str);
+				var ary=str.split("#");
+				if(ary[1]=="1"){
+					document.getElementById("flashId").check_defencePsw(ary[0]+"#1");
+				}else{
+					document.getElementById("flashId").check_defencePsw(ary[0]+"#0");				
+				}				
+			}
+			
+			function openthedoor(str)
+			{
+				alert(str);
+				document.getElementById("flashId").closethedoor("1#4");
+			}
+			
+			function save_layer(str)
+			{
+				alert(str);				
+			}
+
+			
+			swfobject.embedSWF("test.swf?n="+Math.random(),"flashId","1240","700","9.0.0.");			
+		</script>
+	</body>
+</html>
+
+
+
