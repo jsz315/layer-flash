@@ -42,6 +42,36 @@ class CallFuns
 			else if(key == "layer_data"){
 				_flashFuns.Finit_data(loadXML);
 			}
+			else if(key == "call_flash"){
+				//loadXML.firstChild.childNodes[i].attributes.num;
+				var data = loadXML.firstChild.firstChild.childNodes[5].attributes.Value;
+				$this.response(data);
+			}
+			else if(key == "error"){
+				var tip = "";
+				var errorType = loadXML.firstChild.firstChild.childNodes[6].attributes.Value;
+				if(errorType == "-2"){
+					tip = "项目名未注册";
+				}
+				else if(errorType == "-3"){
+					tip = "未知命令";
+				}
+				else if(errorType == "-11"){
+					tip = "项目名未注册";
+					_flashFuns.Fcheck_login("0");
+				}
+				else if(errorType == "-12"){
+					tip = "用户名不存在";
+					_flashFuns.Fcheck_login("0");
+				}
+				else if(errorType == "-13"){
+					tip = "项目端未联网";
+				}
+				else if(errorType == "-14"){
+					tip = "用户无权限";
+				}
+				_root.error_mc.showTip(tip);
+			}
 		};
 		
 		serve.onXML = function(data) {
@@ -55,6 +85,8 @@ class CallFuns
 	
 	function sendWeb(template, args) {
 		var str = repalce(template, args);
+		// str = repalce(str, _root.ProjectName);
+		//Zhenshi_IBMS
 		trace("发送数据 :");
 		trace(str);
 		serve.send(str);
@@ -73,10 +105,24 @@ class CallFuns
 		return aim.join("");	
 	}
 
+	//统一响应处理
+	public function response(data){
+		trace(data);
+		var list = data.split("$");
+		var type = list.shift();
+		data = list[0];
+		if(type == "15"){
+			flashFuns.Fopenthebarrier(data);
+		}
+		else if(type == "16"){
+			flashFuns.Fclosethebarrier(data);
+		}
+	}
+
 	//请求楼层缩略图
 	public function layers_tiny(){
-		var template = '<xml><location ><item key="ProjectName" Value="Zhenshi_IBMS"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><itemkey="CommandVal" Value="20"/><itemkey="Content" Value="1"/></location><xml>';
-		sendWeb(template, [_root.UserName, _root.PassWord]);
+		var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><itemkey="CommandVal" Value="20"/><itemkey="Content" Value="1"/></location><xml>';
+		sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord]);
 	}
 	
 
@@ -90,11 +136,12 @@ class CallFuns
 		else
 		{
 			//fscommand("101", "login#" + psw);
-			var template = '<xml><location ><item key="ProjectName" Value="Zhenshi_IBMS"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="19"/><item key="Content" Value="1"/></location><xml>';
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="19"/><item key="Content" Value="1"/></location><xml>';
 			var ary = psw.split("#");
+			_root.ProjectName = ary[0];
 			_root.UserName = ary[1];
-			_root.PassWord = ary[0];
-			sendWeb(template, [_root.UserName, _root.PassWord]);
+			_root.PassWord = ary[2];
+			sendWeb(template, [ary[0], ary[1], ary[2]]);
 		}
 	}
 
@@ -109,8 +156,8 @@ class CallFuns
 
 	//请求楼层数据
 	public function init_layer(){
-		var template = '<xml><location ><item key="ProjectName" Value="Zhenshi_IBMS"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="21"/><item key="Content" Value="$"/></location><xml>';
-		sendWeb(template, [_root.UserName, _root.PassWord, Datas.layer]);
+		var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="21"/><item key="Content" Value="$"/></location><xml>';
+		sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, Datas.layer]);
 	}
 
 	//请求初始化
@@ -152,7 +199,9 @@ class CallFuns
 			if (action == "Stop") {
 				trace("Stop");
 			}
-			fscommand("2", cam + "#" + action + "#" + speed);
+			// fscommand("2", cam + "#" + action + "#" + speed);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "2$" + cam + "#" + action + "#" + speed]);
 		}
 	}
 
@@ -166,7 +215,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("103", str);
+			// fscommand("103", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "103$" + str]);
 		}
 	}
 
@@ -179,7 +230,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("9", str);
+			// fscommand("9", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "9$" + str]);
 		}
 	}
 
@@ -192,7 +245,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("14", str);
+			// fscommand("14", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "14$" + str]);
 		}
 	}
 	
@@ -205,7 +260,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("15", str);
+			// fscommand("15", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "15$" + str]);
 		}
 	}
 
@@ -218,7 +275,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("16", str);
+			// fscommand("16", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "16$" + str]);
 		}
 	}
 
@@ -232,7 +291,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("102", str);
+			// fscommand("102", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "102$" + str]);
 		}
 	}
 
@@ -245,7 +306,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("7", action + "#" + type + "#" + layer + "#" + id);
+			// fscommand("7", action + "#" + type + "#" + layer + "#" + id);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "7$" + action + "#" + type + "#" + layer + "#" + id]);
 		}
 	}
 
@@ -258,7 +321,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("10", "enter");
+			// fscommand("10", "enter");
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "10$" + "enter"]);
 		}
 	}
 
@@ -271,7 +336,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("104", str);
+			// fscommand("104", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "104$" + str]);
 		}
 	}
 	
@@ -282,7 +349,9 @@ class CallFuns
 		if (isDebug) {
 			
 		}else {
-			fscommand("105", str);
+			// fscommand("105", str);
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "105$" + str]);
 		}
 	}
 		
@@ -295,7 +364,9 @@ class CallFuns
 		}
 		else
 		{
-			fscommand("13", "enter");
+			// fscommand("13", "enter");
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "13$" + "enter"]);
 		}
 	}
 	
@@ -306,17 +377,23 @@ class CallFuns
 		if (isDebug) {
 			
 		}else {
-			fscommand("106", "ba");
+			// fscommand("106", "ba");
+			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "106$" + "ba"]);
 		}
 	}
 	
 	//切换楼层刷新命令
 	public function change_map(num){
-		fscommand("998", num);
+		// fscommand("998", num);
+		var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+		sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "998$" + num]);
 	}
 	
 	//命令操作
 	public function CMD(key, data){
-		fscommand(key, data);
+		// fscommand(key, data);
+		var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
+		sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, key + "$" + data]);
 	}
 }

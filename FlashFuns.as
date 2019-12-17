@@ -421,6 +421,7 @@ class FlashFuns
 	//开闸门
 	public function Fopenthebarrier(str:String)
 	{
+		trace("开闸门" + str);
 		//楼层#id
 		var ary = str.split("#");	
 		if (Datas.layer == ary[0]) {
@@ -442,6 +443,7 @@ class FlashFuns
 	//关闸门
 	public function Fclosethebarrier(str:String)
 	{
+		trace("关闸门" + str);
 		//楼层#id
 		var ary = str.split("#");	
 		if (Datas.layer == ary[0]) {

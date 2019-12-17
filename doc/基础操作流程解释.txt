@@ -1,0 +1,418 @@
+
+一、运行条件说明
+网络版基础操作流程解释
+网络版由中心服务器、项目端设备服务程序，flash页面端组成。通过IE实现操作和显示功能。
+
+系统的运行流程需要按如下步骤执行为：
+
+1、启动中心服务器（中心服务器IP地址固定，并保证数据库可连接）；
+2、启动项目端设备服务程序。
+3、由IE启动flash页面端；
+
+在IE端运行flash过程中，flash主动向中心发送连接请求，因在运行过程中，中心会随时根据此连接向页面主动发送数据，flash需要保证此连接一直保持。
+
+
+二、操作步骤说明（此处以最基本的登录，操作设备、设备发生报警3种操作为例说明，其它操作流程随后补充）
+在中心服务器和项目端服务程序正常运行的情况下（目前已经在地址为119.3.52.193的服务器上运行），按以下步骤操作。
+
+1、WEB页面登录：（119.3.52.193:2255）
+
+客户端发送：
+<policy-file-request/>
+服务端返回：
+<cross-domain-policy><allow-access-from domain="*" to-ports="*"/></cross-domain-policy>
+
+
+2、（点击发送）客户端发送如下数据，WEB页面在中心服务器登录：
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName" Value="admin"/>
+		<item key="PassWord" Value="123"/>
+		<item key="CommandType" Value="1"/>
+		<itemkey="CommandVal" Value="20"/>
+		<itemkey="Content" Value="1"/>		
+	</location>
+<xml>
+
+注：Content" Value="1"  				//1：代表初始化楼层1数据
+
+服务器返回初始化数据（下面数据仅代表格式，中间部分数据已经删除）：
+
+<?xml version="1.0" encoding="UTF-8" ?><invoke key="check_login" value="1"/>
+（注此处目前有30ms的停顿，如果flash不需要可取消）
+
+<?xml version="1.0" encoding="UTF-8" ?> <root DefenceUrl="http://192.168.2.89/matrix/touchstaff3/defencepass.php"id="201806060924" total="1" cur="1"><layer num="1" url="119.3.52.193/system/project/Zhenshi_IBMS\map\general.jpg" layerdesc="general"><Device name="Camera" maxNum="58"><item id="166" xpos="699.10" ypos="212.60" faceto="0" cycle="0" monitorNum="1" physicalNum="166" cameraType="0" /><item id="167" xpos="721.10" ypos="243.10" faceto="1" cycle="0" monitorNum="1" physicalNum="167" cameraType="0" /><item id="168" xpos="664.55" ypos="219.90" faceto="5" cycle="0" monitorNum="1" physicalNum="168" cameraType="0" /><item id="169" xpos="687.80" ypos="259.10" faceto="5" cycle="0" monitorNum="1" physicalNum="169" cameraType="0" /><item id="170" xpos="394.90" ypos="264.85" faceto="0".......中间数据省略，需要查看完整数据在单独的文件"初始化数据包"中	<item id="5" xpos="1193.00" ypos="168.55" auto="0" failure="0" run="0" physicalNum="5" type="1" />
+	</Device>
+	<Device name="Drainage_Pump" maxNum="0">
+	</Device>
+	<Device name="Wind_Switch" maxNum="0">
+	</Device>
+	<Device name="Water_Pump" maxNum="0">
+	</Device>
+	<Device name="Lighting_Lamps" maxNum="0">
+	</Device>
+	<Device name="Elevator" maxNum="0">
+	</Device>
+	<Device name="Lighting_Ctrl" maxNum="0">
+	</Device>
+</layer></root>
+
+
+（至此WEB页面和中心服务器连接成功，可执行后续操作）
+
+
+3、楼层切换
+客户端发送如下数据：
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName" Value="admin"/>
+		<item key="PassWord" Value="123"/>
+		<item key="CommandType" Value="1"/>
+		<itemkey="CommandVal" Value="21"/>
+		<itemkey="Content" Value="28"/>		
+	</location>
+<xml>
+
+注：Content" Value="28"		//28：代表初始化楼层1数据
+
+服务器回复和初始化登录格式相同，区别处仅是这里发送指定楼层数据
+<?xml version="1.0" encoding="UTF-8" ?><invoke key="check_login" value="1"/><?xml version="1.0" encoding="UTF-8" ?> <root DefenceUrl="http://192.168.2.89/matrix/touchstaff3/defencepass.php"id="201806060924" total="1" cur="1"><layer num="28" url="D:\soft\振石集团总部大楼智能化集成系统\map\M26F.jpg" layerdesc="主楼26F"><Device name="Camera" maxNum="3"><item id="84" xpos="977.70" ypos="498.10" faceto="6" cycle="0" monitorNum="1" physicalNum="84" cameraType="4" /><item id="85" xpos="931.25" ypos="496.65" faceto="0" cycle="0" monitorNum="1" physicalNum="85" cameraType="4" /><item id="86" xpos="953.00" ypos="199.40" faceto="0" cycle="0" monitorNum="1" physicalNum="86" cameraType="4" /></Device><Device name="Alarm" maxNum="0"></Device><Device name="HomeAlarm" maxNum="0"></Device><Device name="Door" maxNum="16">		<item id="317" xpos="1518.50" ypos="481.80" doorType="1" faceto="1" status="1" physicalNum="317" />		<item id="318" xpos="1406.85" ypos="406.40" doorType="2" faceto="0" status="1" physicalNum="318" />		<item id="319" xpos="1357.60" ypos="390.45" doorType="3" faceto="1" status="1" physicalNum="319" />		<item id="320" xpos="522.40" ypos="304.90" doorType="4" faceto="0" status="1" physicalNum="320" />		<item id="321" xpos="362.90" ypos="565.90" doorType="1" faceto="1" status="1" physicalNum="321" />		<item id="322" xpos="497.75" ypos="570.25" doorType="2" faceto="1" status="1" physicalNum="322" />		<item id="323" xpos="526.75" ypos="593.40" doorType="3" faceto="0" status="1" physicalNum="323" />		<item id="324" xpos="761.65" ypos="578.90" doorType="4" faceto="1" status="1" physicalNum="324" />		<item id="325" xpos="734.10" ypos="599.25" doorType="1" faceto="0" status="1" physicalNum="325" />		<item id="326" xpos="853.00" ypos="602.15" doorType="2" faceto="0" status="1" physicalNum="326" />		<item id="327" xpos="1063.25" ypos="602.15" doorType="3" faceto="0" status="1" physicalNum="327" />		<item id="328" xpos="1157.45" ypos="577.50" doorType="4" faceto="1" status="1" physicalNum="328" />		<item id="329" xpos="1190.25" ypos="592.35" doorType="1" faceto="0" status="1" physicalNum="329" />		<item id="330" xpos="1418.00" ypos="569.40" doorType="2" faceto="1" status="1" physicalNum="330" />		<item id="331" xpos="1391.25" ypos="590.90" doorType="3" faceto="0" status="1" physicalNum="331" />		<item id="332" xpos="1558.85" ypos="564.15" doorType="4" faceto="1" status="1" physicalNum="332" /></Device><Device name="Barrier" maxNum="0"></Device>	<Device name="CO" maxNum="0">
+	</Device>
+	<Device name="CO2" maxNum="0">
+	</Device>
+	<Device name="PM2.5" maxNum="0">
+	</Device>
+	<Device name="Temperature" maxNum="0">
+	</Device>
+	<Device name="Humidity" maxNum="0">
+	</Device>
+	<Device name="Air_Quality" maxNum="0">
+	</Device>
+	<Device name="Pressure" maxNum="0">
+	</Device>
+	<Device name="Flow" maxNum="0">
+	</Device>
+	<Device name="Water_Tank" maxNum="0">
+	</Device>
+	<Device name="Temp_Ctrl" maxNum="0">
+	</Device>
+	<Device name="Heat_Pump" maxNum="0">
+	</Device>
+	<Device name="Air_Conditioner" maxNum="0">
+	</Device>
+	<Device name="Air_Exhaust" maxNum="0">
+	</Device>
+	<Device name="Fan" maxNum="0">
+	</Device>
+	<Device name="Drainage_Pump" maxNum="0">
+	</Device>
+	<Device name="Wind_Switch" maxNum="1">
+		<item id="25" xpos="732.80" ypos="94.70" auto="0" failure="0" run="0" physicalNum="25" type="1" />
+	</Device>
+	<Device name="Water_Pump" maxNum="0">
+	</Device>
+	<Device name="Lighting_Lamps" maxNum="0">
+	</Device>
+	<Device name="Elevator" maxNum="0">
+	</Device>
+	<Device name="Lighting_Ctrl" maxNum="0">
+	</Device>
+</layer></root>
+
+
+4、具体设备操作，（以切换摄像机为例）flash发送如下数据：
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName" Value="admin"/>
+		<item key="PassWord" Value="123"/>
+		<item key="CommandType" Value="1"/>
+		<itemkey="CommandVal" Value="31"/>
+		<itemkey="Content" Value="1$1#198"/>
+	</location>
+<xml>
+
+
+
+服务器返回：
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>					//项目名称
+		<item key="UserName"Value="admin"/>						//登录的操作员用户名
+		<item key="PassWord"Value=""/>							//操作员密码
+		<item key="CommandType" Value="4"/>						//命令类型，1：WEB请求；2：中心应答；3：设备状态更新，如报警；4：对WEB操作的结果返回；
+		<item key="CommandVal" Value="31"/>						//代表设备操作返回
+		<item key="Content" Value="1$1#198"/>						//使用原有版本的flash调用c++数据格式命令和参数直接使用$分隔
+		<item key="Op_sn"Value="5"/>							//数据包流水号，WEB端不需要处理
+		<item key="Result" Value="1"/>							//执行结果，0：操作失败；1：操作成功
+	</location >
+</xml>
+
+
+
+5、WEB查询门禁记录（门禁、道闸、报警类似）
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName" Value="admin"/>
+		<item key="PassWord" Value="123"/>
+		<item key="CommandType" Value="1"/>
+		<itemkey="CommandVal" Value="32"/>
+		<itemkey="Content" Value="103$1#1#2018#11#04#8#2019#11#28#8#0#"/>
+	</location>
+<xml>
+
+
+
+服务器返回：
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value="admin"/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="2"/>
+		<item key="CommandVal" Value="32"/>
+		<item key="Content" Value=" <invoke name="search_info"  returntype="xml">  <arguments> <string>QueryAlarmsLog.txt</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value="1"/>
+	</location >
+</xml>
+
+
+2#道闸
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value="admin"/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="2"/>
+		<item key="CommandVal" Value="32"/>
+		<item key="Content" Value=" <invoke name="search_info"  returntype="xml">  <arguments> <string>QueryAlarmsLog.txt</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value="1"/>
+	</location >
+</xml>
+
+
+
+
+
+
+3#查询报警
+
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value="admin"/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="2"/>
+		<item key="CommandVal" Value="32"/>
+		<item key="Content" Value=" <invoke name="search_info"  returntype="xml">  <arguments> <string>1,0,2,2018-12-22 15:11:31;2,0,2,2018-12-22 15:10:30;3,0,2,2018-12-22 15:10:3;4,0,1,2018-12-22 15:9:46;5,0,1,2018-12-22 15:9:33;6,0,2,2018-12-22 15:8:31;7,0,0,2018-12-22 15:8:25;8,0,1,2018-12-22 15:8:19;9,0,2,2018-12-22 15:7:18;10,0,1,2018-12-22 15:7:13;11,0,2,2018-12-22 15:7:3;12,0,0,2018-12-22 15:6:57;13,0,1,2018-12-22 15:6:52;14,0,0,2018-12-22 15:6:44;15,0,1,2018-12-22 15:6:38;16,0,0,2018-12-22 15:6:17;17,0,1,2018-12-22 15:6:5;18,0,2,2018-12-22 15:2:49;19,0,1,2018-12-22 14:59:12;20,0,2,2018-12-22 14:57:47;21,0,0,2018-12-22 14:57:7;22,0,1,2018-12-22 14:56:35;23,0,2,2018-12-22 14:54:21;24,0,1,2018-12-22 14:53:53;25,0,1,2018-12-22 14:53:32;26,0,2,2018-12-22 14:52:23;27,0,0,2018-12-22 14:50:42;28,0,1,2018-12-22 14:49:51;29,0,1,2018-12-22 14:45:50;30,0,0,2018-12-22 14:24:26;</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value="1"/>
+	</location >
+</xml>
+
+
+
+6、退出系统
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName" Value="admin"/>
+		<item key="PassWord" Value="123"/>
+		<item key="CommandType" Value="1"/>
+		<itemkey="CommandVal" Value="32"/>
+		<itemkey="Content" Value="13$enter"/>
+	</location>
+<xml>
+
+服务器返回：退出系统不需要返回，服务器只断开连接即可
+
+
+注：发送和接收到的数据原则以原有的flash和c++服务通信格式为基础，将原有数据添加在<itemkey="Content" Value="1$1#198"/>语句的值域。其它元素是供服务器和flash端判断是否属于本处处理的数据。
+
+
+
+三、中心或项目端刷新WEB页面数据
+
+（一）、安防类设备主动上传数据
+
+1、设备服务器端发生报警事件，此时由中心主动转发到flash页面。
+
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value="admin"/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="41"/>
+		<item key="Content" Value="Internal communication request;Instruction type=2;Instruction code=32;Action=0;Dev num=1;Zoom=2;Type=2;End of the communication"/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value="1"/>
+	</location >
+</xml>
+
+
+
+
+（二）、BA设备状态刷新主动上传数据
+
+
+1、水箱水位
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+			<item key="Content" Value=" <invoke name="collection_disply"  returntype="xml">  <arguments> <string>109#2#0.70</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+2、风冷热泵
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+			<item key="Content" Value=" <invoke name="Heat_Pump_State"  returntype="xml">  <arguments> <string>202#1#0#0#0</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+3、送风机
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+		<item key="Content" Value=" <invoke name="Fan_State"  returntype="xml">  <arguments> <string>205#5#0#1#1</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+4、水泵
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+		<item key="Content" Value=" <invoke name="Water_Pump_State"  returntype="xml">  <arguments> <string>208#1#0#1#0</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+5、排水泵
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+		<item key="Content" Value=" <invoke name="Drainage_Pump_State"  returntype="xml">  <arguments> <string>206#1#0#0#1#0#0#1#0#</string></arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+5、CO传感器
+
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+		<item key="Content" Value=" <invoke name="collection_disply"  returntype="xml">  <arguments> <string>101#1#21.62</string> </arguments></invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+6、PM2.5传感器（其余传感器格式相同略）
+<xml>
+	<location >
+		<item key="ProjectName" Value="Zhenshi_IBMS"/>
+		<item key="UserName"Value=""/>
+		<item key="PassWord"Value=""/>
+		<item key="CommandType" Value="3"/>
+		<item key="CommandVal" Value="42"/>
+		<item key="Content" Value=" <invoke name="collection_disply"  returntype="xml">  <arguments> <string>102#1#0.94</string> </arguments> </invoke> "/>
+		<item key="Op_sn"Value=""/>
+		<item key="Result" Value=""/>
+	</location >
+</xml>
+
+
+
+
+
+
+查询门禁：
+
+void CTempFlash1Dlg::OnFSCommandShockwaveflash1(LPCTSTR command, LPCTSTR args) 
+LPCTSTR command 103        LPCTSTR args           1#1#2018#11#04#8#2019#11#28#8#0#
+						  2#1#2018#11#04#8#2019#11#28#8#0#
+						  3#1#2018#11#04#8#2019#11#28#8#0#
+
+查询道闸
+
+void CTempFlash1Dlg::OnFSCommandShockwaveflash1(LPCTSTR command, LPCTSTR args) 
+LPCTSTR command 103        LPCTSTR args           2#1#2018#11#04#8#2019#11#28#8#0#
+
+查询报警
+103                                          3#1#2018#11#04#8#2019#11#28#8#0#
+
+
+
+
+103$1#1#2018#11#04#8#2019#11#28#8#0#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

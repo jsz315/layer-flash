@@ -374,6 +374,9 @@ class Tool
 	public static function getDataOnlyById(id:String, type:String)
 	{
 		trace("type: -- > " + type);
+		if(!type){
+			return null;
+		}
 		for (var i = 0; i < Datas.layerDataAry.length; i++)
 		{
 			var layerData:LayerData = Datas.layerDataAry[i];
