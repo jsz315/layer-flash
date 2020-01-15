@@ -52,6 +52,7 @@ class CallFuns
 				var errorType = loadXML.firstChild.firstChild.childNodes[6].attributes.Value;
 				if(errorType == "-2"){
 					tip = "项目名未注册";
+					_flashFuns.Fcheck_login("0");
 				}
 				else if(errorType == "-3"){
 					tip = "未知命令";
@@ -70,6 +71,7 @@ class CallFuns
 				else if(errorType == "-14"){
 					tip = "用户无权限";
 				}
+				trace(errorType + ":" + tip);
 				_root.error_mc.showTip(tip);
 			}
 		};
@@ -367,6 +369,8 @@ class CallFuns
 			// fscommand("13", "enter");
 			var template = '<xml><location ><item key="ProjectName" Value="$"/><item key="UserName" Value="$"/><item key="PassWord" Value="$"/><item key="CommandType" Value="1"/><item key="CommandVal" Value="31"/><item key="Content" Value="$"/></location><xml>';
 			sendWeb(template, [_root.ProjectName, _root.UserName, _root.PassWord, "13$" + "enter"]);
+			// ExternalInterface.call("location.reload");
+			getURL("javascript:setTimeout(function(){location.reload()},400)");
 		}
 	}
 	
